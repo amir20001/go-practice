@@ -5,11 +5,9 @@ import (
 	"time"
 )
 
-var cache [100]int
-
 func main() {
 
-	var count int = 46
+	var count int = 50
 
 	start := time.Now()
 	fmt.Println(fibRecursive(count))
@@ -32,15 +30,15 @@ func fibRecursive(seq int) int {
 
 func fibFast(seq int) int {
 	if seq <= 1 {
-		cache[seq] = seq
 		return seq
 	}
 
-	if cache[seq] != 0 {
-		return cache[seq]
+	s := make([]int, seq)
+	s[0] = 0
+	s[1] = 1
+	for i := 2; i < seq; i++ {
+		s[i] = s[i-1] + s[i-2]
 	}
 
-	value := fibFast(seq-1) + fibFast(seq-2)
-	cache[seq] = value
-	return value
+	return s[seq-1] + s[seq-2]
 }
